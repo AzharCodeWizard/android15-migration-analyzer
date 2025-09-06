@@ -1,0 +1,4 @@
+theme: jekyll-theme-minimal
+title: Android 15 Migration Analyzer
+description: Analyze your Android projects for Android 15 (API 35) compatibility issues
+show_downloads: true

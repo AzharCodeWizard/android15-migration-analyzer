@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android 15 Migration Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fab fa-android"></i> Android 15 Migration Analyzer</h1>
+            <p>Analyze your Android project for Android 15 (API 35) compatibility issues</p>
+        </header>
+
+        <main>
+            <section class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Upload Your Android Project Files</h3>
+                    <p>Drag and drop your .java, .kt, .xml, or .gradle files here, or click to browse</p>
+                    <input type="file" id="fileInput" multiple accept=".java,.kt,.xml,.gradle,.json">
+                    <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+                        Browse Files
+                    </button>
+                </div>
+            </section>
+
+            <section class="analysis-section" id="analysisSection" style="display: none;">
+                <h2>Analysis Results</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3 id="issueCount">0</h3>
+                        <p>Issues Found</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-file-code"></i>
+                        <h3 id="fileCount">0</h3>
+                        <p>Files Analyzed</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3 id="compatibilityScore">0%</h3>
+                        <p>Compatibility Score</p>
+                    </div>
+                </div>
+
+                <div class="results-container">
+                    <div class="filter-tabs">
+                        <button class="tab-btn active" data-category="all">All Issues</button>
+                        <button class="tab-btn" data-category="critical">Critical</button>
+                        <button class="tab-btn" data-category="warning">Warnings</button>
+                        <button class="tab-btn" data-category="info">Info</button>
+                    </div>
+
+                    <div class="results-list" id="resultsList">
+                        <!-- Results will be populated here -->
+                    </div>
+                </div>
+
+                <div class="migration-guide">
+                    <h3>Android 15 Migration Guide</h3>
+                    <div class="guide-sections">
+                        <div class="guide-section">
+                            <h4><i class="fas fa-shield-alt"></i> Privacy & Security Changes</h4>
+                            <ul>
+                                <li>Enhanced security for partial photo and video access</li>
+                                <li>New private space functionality</li>
+                                <li>Updated background activity restrictions</li>
+                            </ul>
+                        </div>
+                        <div class="guide-section">
+                            <h4><i class="fas fa-mobile-alt"></i> User Experience</h4>
+                            <ul>
+                                <li>Predictive back gesture improvements</li>
+                                <li>Edge-to-edge enforcement for API 35+</li>
+                                <li>New notification experience</li>
+                            </ul>
+                        </div>
+                        <div class="guide-section">
+                            <h4><i class="fas fa-cogs"></i> Performance & Graphics</h4>
+                            <ul>
+                                <li>OpenJDK 17 features and API updates</li>
+                                <li>Camera and media improvements</li>
+                                <li>Dynamic performance framework</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Android 15 Migration Analyzer. Built for developers, by developers.</p>
+            <div class="social-links">
+                <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://developer.android.com/about/versions/15" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="analyzer.js"></script>
+</body>
+</html>
