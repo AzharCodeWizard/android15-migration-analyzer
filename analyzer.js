@@ -2,6 +2,7 @@ class Android15MigrationAnalyzer {
     constructor() {
         this.uploadArea = document.getElementById('uploadArea');
         this.fileInput = document.getElementById('fileInput');
+        this.singleFileInput = document.getElementById('singleFileInput');
         this.analysisSection = document.getElementById('analysisSection');
         this.resultsList = document.getElementById('resultsList');
         
@@ -13,8 +14,11 @@ class Android15MigrationAnalyzer {
     }
 
     initializeEventListeners() {
-        // File input change
+        // File input change for folder upload
         this.fileInput.addEventListener('change', (e) => this.handleFiles(e.target.files));
+        
+        // File input change for individual files
+        this.singleFileInput.addEventListener('change', (e) => this.handleFiles(e.target.files));
         
         // Drag and drop
         this.uploadArea.addEventListener('dragover', (e) => {
@@ -160,6 +164,46 @@ class Android15MigrationAnalyzer {
                 title: 'Private Space Functionality',
                 description: 'Android 15 introduces private space functionality',
                 message: 'Consider how private space affects app visibility and behavior'
+            },
+
+            // Notification improvements
+            {
+                id: 'notification_experience',
+                pattern: /NotificationManager|NotificationCompat|createNotificationChannel/g,
+                severity: 'info',
+                title: 'Notification Experience Updates',
+                description: 'Android 15 introduces new notification experience improvements',
+                message: 'Review notification implementation for Android 15 enhancements'
+            },
+
+            // Storage and file access
+            {
+                id: 'scoped_storage',
+                pattern: /Environment\.getExternalStorageDirectory|MediaStore\.Files/g,
+                severity: 'warning',
+                title: 'Scoped Storage Compliance',
+                description: 'Ensure compliance with scoped storage requirements',
+                message: 'Use MediaStore APIs or Storage Access Framework for file operations'
+            },
+
+            // Permission changes
+            {
+                id: 'permission_changes',
+                pattern: /<uses-permission.*READ_EXTERNAL_STORAGE|WRITE_EXTERNAL_STORAGE/g,
+                severity: 'warning',
+                title: 'Storage Permission Changes',
+                description: 'Storage permissions behavior may change in Android 15',
+                message: 'Review storage permissions and consider granular photo/video permissions'
+            },
+
+            // Work profiles and enterprise
+            {
+                id: 'work_profile',
+                pattern: /DevicePolicyManager|UserManager\.isUserAGoat/g,
+                severity: 'info',
+                title: 'Work Profile Enhancements',
+                description: 'Android 15 includes work profile and enterprise feature updates',
+                message: 'Review work profile compatibility and enterprise features'
             }
         ];
     }
@@ -171,14 +215,96 @@ class Android15MigrationAnalyzer {
         this.issues = [];
         this.analyzedFiles = [];
         
-        for (let file of files) {
-            if (this.isValidFile(file)) {
-                await this.analyzeFile(file);
-            }
+        // Filter and organize files by type
+        const validFiles = Array.from(files).filter(file => this.isValidFile(file));
+        const projectStructure = this.analyzeProjectStructure(validFiles);
+        
+        // Display project structure info
+        console.log('Project Structure:', projectStructure);
+        
+        // Analyze each file
+        for (let file of validFiles) {
+            await this.analyzeFile(file);
         }
+        
+        // Run project-level analysis
+        this.runProjectLevelAnalysis(projectStructure);
         
         this.displayResults();
         this.hideLoading();
+    }
+
+    analyzeProjectStructure(files) {
+        const structure = {
+            totalFiles: files.length,
+            javaFiles: [],
+            kotlinFiles: [],
+            xmlFiles: [],
+            gradleFiles: [],
+            manifestFiles: [],
+            folders: new Set()
+        };
+
+        files.forEach(file => {
+            const path = file.webkitRelativePath || file.name;
+            const folderPath = path.substring(0, path.lastIndexOf('/'));
+            if (folderPath) structure.folders.add(folderPath);
+
+            if (file.name.endsWith('.java')) {
+                structure.javaFiles.push(file);
+            } else if (file.name.endsWith('.kt')) {
+                structure.kotlinFiles.push(file);
+            } else if (file.name.endsWith('.xml')) {
+                structure.xmlFiles.push(file);
+                if (file.name === 'AndroidManifest.xml') {
+                    structure.manifestFiles.push(file);
+                }
+            } else if (file.name.endsWith('.gradle')) {
+                structure.gradleFiles.push(file);
+            }
+        });
+
+        return structure;
+    }
+
+    runProjectLevelAnalysis(structure) {
+        // Check for missing critical files
+        if (structure.manifestFiles.length === 0) {
+            this.issues.push({
+                id: 'missing_manifest',
+                severity: 'critical',
+                title: 'Missing AndroidManifest.xml',
+                description: 'No AndroidManifest.xml file found in the project',
+                file: 'Project Structure',
+                line: 0,
+                message: 'AndroidManifest.xml is required for Android applications'
+            });
+        }
+
+        if (structure.gradleFiles.length === 0) {
+            this.issues.push({
+                id: 'missing_gradle',
+                severity: 'warning',
+                title: 'No Gradle files found',
+                description: 'No build.gradle files found in the project',
+                file: 'Project Structure',
+                line: 0,
+                message: 'Gradle build files are recommended for Android projects'
+            });
+        }
+
+        // Check project size and complexity
+        if (structure.totalFiles > 100) {
+            this.issues.push({
+                id: 'large_project',
+                severity: 'info',
+                title: 'Large Project Detected',
+                description: `Project contains ${structure.totalFiles} files`,
+                file: 'Project Structure',
+                line: 0,
+                message: 'Consider modularizing large projects for better maintainability'
+            });
+        }
     }
 
     isValidFile(file) {
@@ -230,19 +356,39 @@ class Android15MigrationAnalyzer {
         document.getElementById('issueCount').textContent = this.issues.length;
         document.getElementById('fileCount').textContent = this.analyzedFiles.length;
         
-        // Calculate compatibility score
-        const totalChecks = this.analysisRules.length;
+        // Calculate compatibility score based on issue severity
         const criticalIssues = this.issues.filter(i => i.severity === 'critical').length;
         const warningIssues = this.issues.filter(i => i.severity === 'warning').length;
+        const infoIssues = this.issues.filter(i => i.severity === 'info').length;
         
-        const score = Math.max(0, 100 - (criticalIssues * 20) - (warningIssues * 5));
+        // More sophisticated scoring algorithm
+        const maxScore = 100;
+        const criticalPenalty = criticalIssues * 25;
+        const warningPenalty = warningIssues * 10;
+        const infoPenalty = infoIssues * 2;
+        
+        const score = Math.max(0, maxScore - criticalPenalty - warningPenalty - infoPenalty);
         document.getElementById('compatibilityScore').textContent = `${score}%`;
+        
+        // Update compatibility score color based on score
+        const scoreElement = document.getElementById('compatibilityScore');
+        const scoreCard = scoreElement.closest('.stat-card');
+        if (score >= 80) {
+            scoreCard.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+        } else if (score >= 60) {
+            scoreCard.style.background = 'linear-gradient(135deg, #ffc107 0%, #fd7e14 100%)';
+        } else {
+            scoreCard.style.background = 'linear-gradient(135deg, #dc3545 0%, #e83e8c 100%)';
+        }
         
         // Show analysis section
         this.analysisSection.style.display = 'block';
         
         // Display issues
         this.renderIssues(this.issues);
+        
+        // Smooth scroll to results
+        this.analysisSection.scrollIntoView({ behavior: 'smooth' });
     }
 
     renderIssues(issues) {

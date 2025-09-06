@@ -18,12 +18,18 @@
             <section class="upload-section">
                 <div class="upload-area" id="uploadArea">
                     <i class="fas fa-cloud-upload-alt"></i>
-                    <h3>Upload Your Android Project Files</h3>
-                    <p>Drag and drop your .java, .kt, .xml, or .gradle files here, or click to browse</p>
-                    <input type="file" id="fileInput" multiple accept=".java,.kt,.xml,.gradle,.json">
-                    <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
-                        Browse Files
-                    </button>
+                    <h3>Upload Your Android Project</h3>
+                    <p>Drag and drop your entire project folder or individual files (.java, .kt, .xml, .gradle) here, or click to browse</p>
+                    <input type="file" id="fileInput" multiple accept=".java,.kt,.xml,.gradle,.json" webkitdirectory directory>
+                    <input type="file" id="singleFileInput" multiple accept=".java,.kt,.xml,.gradle,.json" style="display: none;">
+                    <div class="upload-buttons">
+                        <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-folder"></i> Upload Folder
+                        </button>
+                        <button class="btn-secondary" onclick="document.getElementById('singleFileInput').click()">
+                            <i class="fas fa-file"></i> Upload Files
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -93,7 +99,7 @@
         </main>
 
         <footer>
-            <p>&copy; 2024 Android 15 Migration Analyzer. Built for developers, by developers.</p>
+            <p>&copy; 2025 Android 15 Migration Analyzer. Built for developers, by developers.</p>
             <div class="social-links">
                 <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="https://developer.android.com/about/versions/15" target="_blank"><i class="fas fa-external-link-alt"></i></a>
