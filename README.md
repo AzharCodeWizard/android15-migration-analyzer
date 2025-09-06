@@ -1,3 +1,4 @@
+# android15-migration-analyzer
 # Android 15 Migration Analyzer
 
 A comprehensive web-based tool to analyze Android projects for Android 15 (API level 35) compatibility issues and migration requirements.
@@ -24,7 +25,6 @@ A comprehensive web-based tool to analyze Android projects for Android 15 (API l
 - Edge-to-edge enforcement for API 35+
 - New notification experience
 
-### ⚡ Performance & Graphics
 - OpenJDK 17 features and API updates
 - Camera and media improvements
 - Dynamic performance framework
@@ -32,30 +32,14 @@ A comprehensive web-based tool to analyze Android projects for Android 15 (API l
 ## How to Use
 
 1. **Upload Files**: Drag and drop your Android project files or click "Browse Files"
-2. **View Results**: Review the analysis results with severity indicators
-3. **Filter Issues**: Use category tabs to filter by Critical, Warning, or Info issues
-4. **Follow Guidance**: Read recommendations for each detected issue
-5. **Check Migration Guide**: Review the comprehensive Android 15 migration guide
-
-## Supported File Types
-
 - `.java` - Java source files
 - `.kt` - Kotlin source files
 - `.xml` - Android XML layout and manifest files
 - `.gradle` - Gradle build scripts
-- `.json` - Configuration files
-
-## Detection Rules
 
 The analyzer checks for:
-
-- Target SDK version compatibility
-- Deprecated API usage
 - Privacy and security changes
 - Background activity restrictions
-- Edge-to-edge display requirements
-- Notification system updates
-- Camera and media API changes
 - Performance optimization opportunities
 
 ## Live Demo
@@ -72,30 +56,14 @@ Try the analyzer at: [Your GitHub Pages URL]
 
 Contributions are welcome! Please feel free to submit pull requests or open issues for:
 
-- Additional detection rules
-- UI/UX improvements
-- Bug fixes
-- Documentation updates
-
-## Resources
-
 - [Android 15 Developer Guide](https://developer.android.com/about/versions/15)
 - [Android 15 Behavior Changes](https://developer.android.com/about/versions/15/behavior-changes-15)
 - [Migration Guide](https://developer.android.com/about/versions/15/migration)
 
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
 
 ## Browser Compatibility
-
-- Chrome 80+
-- Firefox 75+
 - Safari 13+
 - Edge 80+
-
-## Privacy
-
 This tool processes files entirely in your browser. No files are uploaded to any server, ensuring your code privacy and security.
 
 ---
