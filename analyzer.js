@@ -9,8 +9,61 @@ class Android15MigrationAnalyzer {
         this.issues = [];
         this.analyzedFiles = [];
         
+        this.initializeTheme();
         this.initializeEventListeners();
         this.initializeAnalysisRules();
+    }
+
+    initializeTheme() {
+        // Check for saved theme preference or detect system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const initialTheme = savedTheme || systemTheme;
+        
+        this.setTheme(initialTheme);
+        
+        // Listen for system theme changes if no manual preference is set
+        if (!savedTheme) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme')) {
+                    this.setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        }
+        
+        // Initialize theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
+    }
+
+    setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        
+        // Update theme toggle button aria-label
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.setAttribute('aria-label', 
+                theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+            );
+        }
+    }
+
+    toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        this.setTheme(newTheme);
+        
+        // Add a subtle animation feedback
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 150);
+        }
     }
 
     initializeEventListeners() {
