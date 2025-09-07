@@ -517,16 +517,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add some demo functionality for better user experience
 document.addEventListener('DOMContentLoaded', () => {
-    // Add demo button
-    const uploadSection = document.querySelector('.upload-section');
-    const demoButton = document.createElement('button');
-    demoButton.className = 'btn-primary';
-    demoButton.style.marginLeft = '10px';
-    demoButton.textContent = 'Try Demo';
-    demoButton.onclick = runDemo;
-    
-    const browseButton = document.querySelector('.upload-area button');
-    browseButton.parentNode.insertBefore(demoButton, browseButton.nextSibling);
+    // Add demo button to upload buttons container
+    const uploadButtons = document.querySelector('.upload-buttons');
+    if (uploadButtons) {
+        const demoButton = document.createElement('button');
+        demoButton.className = 'btn-demo btn-primary';
+        demoButton.innerHTML = '<i class="fas fa-play"></i> Try Demo';
+        demoButton.onclick = runDemo;
+        uploadButtons.appendChild(demoButton);
+    }
 });
 
 function runDemo() {

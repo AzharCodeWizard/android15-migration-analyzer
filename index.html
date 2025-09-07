@@ -14,27 +14,52 @@
     <div class="container">
         <header>
             <div class="header-content">
-                <div class="title-section">
-                    <h1><i class="fab fa-android"></i> Android 15 Migration Analyzer</h1>
-                    <p>Analyze your Android project for Android 15 (API 35) compatibility issues</p>
-                </div>
-                <div class="theme-toggle-container">
-                    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon"></i>
-                        <i class="fas fa-sun"></i>
-                    </button>
+                <nav class="header-nav">
+                    <a href="#" class="logo">
+                        <i class="fab fa-android"></i>
+                        Android 15 Analyzer
+                    </a>
+                    <div class="nav-right">
+                        <a href="https://www.linkedin.com/in/iamazhar/" target="_blank" rel="noopener noreferrer" class="about-developer">
+                            <i class="fab fa-linkedin"></i>
+                            About Developer
+                        </a>
+                        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon"></i>
+                            <i class="fas fa-sun"></i>
+                        </button>
+                    </div>
+                </nav>
+                
+                <div class="hero-main">
+                    <h1>Android 15 Migration Analyzer</h1>
+                    <p class="hero-subtitle">
+                        Analyze your Android project for Android 15 (API 35) compatibility issues with our advanced, privacy-first tool
+                    </p>
+                    <div class="hero-features">
+                        <div class="hero-feature">
+                            <i class="fas fa-shield-alt"></i>
+                            100% Private
+                        </div>
+                        <div class="hero-feature">
+                            <i class="fas fa-lightning-bolt"></i>
+                            Instant Results
+                        </div>
+                        <div class="hero-feature">
+                            <i class="fas fa-check-circle"></i>
+                            Professional Grade
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
 
         <main>
-            <section class="upload-section">
-                <div class="privacy-notice">
-                    <i class="fas fa-shield-alt"></i>
-                    <p><strong>Privacy First:</strong> All files are processed entirely in your browser. Nothing is uploaded to our servers - your code stays private and secure on your device.</p>
-                </div>
+            <section id="upload" class="upload-section">
                 <div class="upload-area" id="uploadArea">
-                    <i class="fas fa-cloud-upload-alt"></i>
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
                     <h3>Upload Your Android Project</h3>
                     <p>Drag and drop your entire project folder or individual files (.java, .kt, .xml, .gradle) here, or click to browse</p>
                     <input type="file" id="fileInput" multiple accept=".java,.kt,.xml,.gradle,.json" webkitdirectory directory>
@@ -83,89 +108,6 @@
                     </div>
                 </div>
 
-                <div class="migration-guide">
-                    <h3>Android 15 Migration Guide</h3>
-                    <div class="guide-sections">
-                        <div class="guide-section">
-                            <h4><i class="fas fa-shield-alt"></i> Privacy & Security Changes</h4>
-                            <ul>
-                                <li>Enhanced security for partial photo and video access</li>
-                                <li>New private space functionality</li>
-                                <li>Updated background activity restrictions</li>
-                            </ul>
-                        </div>
-                        <div class="guide-section">
-                            <h4><i class="fas fa-mobile-alt"></i> User Experience</h4>
-                            <ul>
-                                <li>Predictive back gesture improvements</li>
-                                <li>Edge-to-edge enforcement for API 35+</li>
-                                <li>New notification experience</li>
-                            </ul>
-                        </div>
-                        <div class="guide-section">
-                            <h4><i class="fas fa-cogs"></i> Performance & Graphics</h4>
-                            <ul>
-                                <li>OpenJDK 17 features and API updates</li>
-                                <li>Camera and media improvements</li>
-                                <li>Dynamic performance framework</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="privacy-info">
-                        <h4><i class="fas fa-lock"></i> Your Privacy is Protected</h4>
-                        <div class="privacy-details">
-                            <div class="privacy-point">
-                                <i class="fas fa-browser"></i>
-                                <div>
-                                    <strong>Client-Side Processing</strong>
-                                    <p>All analysis happens in your browser using JavaScript</p>
-                                </div>
-                            </div>
-                            <div class="privacy-point">
-                                <i class="fas fa-server"></i>
-                                <div>
-                                    <strong>No Server Upload</strong>
-                                    <p>Your files never leave your device or get sent to any server</p>
-                                </div>
-                            </div>
-                            <div class="privacy-point">
-                                <i class="fas fa-eye-slash"></i>
-                                <div>
-                                    <strong>No Data Collection</strong>
-                                    <p>We don't track, store, or analyze your code or personal data</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="external-resources">
-                        <h4><i class="fas fa-external-link-alt"></i> Additional Resources</h4>
-                        <div class="resource-links">
-                            <a href="https://medium.com/@iam_azhar/the-ultimate-android-34-android-35-migration-checklist-everything-you-need-to-know-32f862de882a" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               class="btn-primary btn-medium">
-                                <i class="fab fa-medium"></i>
-                                Complete Migration Guide on Medium
-                            </a>
-                            <a href="https://developer.android.com/about/versions/15" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               class="btn-secondary">
-                                <i class="fab fa-android"></i>
-                                Official Android 15 Documentation
-                            </a>
-                            <a href="https://developer.android.com/about/versions/15/migration" 
-                               target="_blank" 
-                               rel="noopener noreferrer"
-                               class="btn-secondary">
-                                <i class="fas fa-book"></i>
-                                Android 15 Migration Guide
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </section>
         </main>
 
